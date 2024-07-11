@@ -4,11 +4,13 @@
     - [Nuget Repository](#nuget-repository)
 - [Almalinux container](#almalinux-container)
     - [PowerShellGet](#powershellget)
-        - [Register local Nexus Repository](#register-local-nexus-repository)
+        - [Register Nexus Repository](#register-nexus-repository)
         - [Find a Module](#find-a-module)
-        - [Register local Nexus Repository with credentials](#register-local-nexus-repository-with-credentials)
+        - [PSRepositories.xml](#psrepositoriesxml)
+        - [Register Nexus Repository with credentials](#register-nexus-repository-with-credentials)
         - [Find a Module with credentials](#find-a-module-with-credentials)
     - [PSResourceGet](#psresourceget)
+    - [Offline Installation NuPkg](#offline-installation-nupkg)
 
 <!-- /TOC -->
 
@@ -153,6 +155,8 @@ Find-Module -Name -Repository nexusGallery -Credential $Creds -Verbose
 Output:
 
 ````powershell
+WARNING: Unable to resolve package source 'http://nexus:8081/repository/PSModules/'.
+Find-Package: No match was found for the specified search criteria and module name 'PsNetTools'. Try Get-PSRepository to see all available registered module repositories.
 ````
 
 ## PSResourceGet
