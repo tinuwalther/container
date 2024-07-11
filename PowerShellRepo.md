@@ -14,6 +14,7 @@
 
 # Nexus container
 
+Sonatype Nexus Repository OSS 3.70.1-02
 The Nexus container has a custom network configured.
 
 ## Nuget Repository
@@ -34,7 +35,7 @@ Name                      InstallationPolicy   SourceLocation
 PSGallery                 Untrusted            https://www.powershellgallery.com/api/v2
 ````
 
-### Register local Nexus Repository
+### Register Nexus Repository
 
 The Nexus Repository has a Nuget Repo for Modules and one for Scripts configured. Anonymous Access is enabled.
 
@@ -63,12 +64,21 @@ VERBOSE: Repository details, Name = 'nexusGallery', Location = 'http://nexus:808
 ### Find a Module
 
 ````powershell
-Find-Module -Repository nexusGallery -Verbose
+Find-Module -Name PsNetTools -Repository nexusGallery -Verbose
 ````
 
 Output:
 
 ````powershell
+VERBOSE: Suppressed Verbose Repository details, Name = 'nexusGallery', Location = 'http://nexus:8081/repository/PSModules/'; IsTrusted = 'True'; IsRegistered = 'True'.
+VERBOSE: Repository details, Name = 'nexusGallery', Location = 'http://nexus:8081/repository/PSModules/'; IsTrusted = 'True'; IsRegistered = 'True'.
+VERBOSE: Using the provider 'PowerShellGet' for searching packages.
+VERBOSE: Using the specified source names : 'nexusGallery'.
+VERBOSE: Getting the provider object for the PackageManagement Provider 'NuGet'.
+VERBOSE: The specified Location is 'http://nexus:8081/repository/PSModules/' and PackageManagementProvider is 'NuGet'.
+VERBOSE: Searching repository 'http://nexus:8081/repository/PSModules/FindPackagesById()?id='PsNetTools'' for ''.
+VERBOSE: Total package yield:'1' for the specified package 'PsNetTools'.
+
 Version              Name                                Repository           Description
 -------              ----                                ----------           -----------
 0.7.8                PsNetTools                          nexusGallery         Cross platform PowerShell module to test networ… 
@@ -105,7 +115,7 @@ InstallationPolicy        Trusted
 PackageManagementProvider NuGet
 ````
 
-### Register local Nexus Repository with credentials
+### Register Nexus Repository with credentials
 
 The Nexus Repository has a Nuget Repo for Modules and one for Scripts configured. Anonymous Access is disabled.
 
@@ -137,7 +147,7 @@ VERBOSE: Repository details, Name = 'nexusGallery', Location = 'http://nexus:808
 ### Find a Module with credentials
 
 ````powershell
-Find-Module -Repository nexusGallery -Credential $Creds -Verbose
+Find-Module -Name -Repository nexusGallery -Credential $Creds -Verbose
 ````
 
 Output:
@@ -152,4 +162,30 @@ Get-PSResourceRepository
 Name      Uri                                      Trusted Priority
 ----      ---                                      ------- --------
 PSGallery https://www.powershellgallery.com/api/v2 False   50
+````
+
+## Offline Installation NuPkg
+
+Download the Package:
+
+````powershell
+Invoke-WebRequest -Uri 'http://nexus:8081/repository/PSModules/PsNetTools/0.7.8' -OutFile '/home/nupkg/PsNetTools.nupkg'
+````
+
+Register a local path as local Repository:
+
+````powershell
+Register-PSRepository -Name LocalPackages -SourceLocation /home/nupkg/ -InstallationPolicy Trusted
+````
+
+Install the Module from the local Repository:
+
+````powershell
+Install-Module PsNetTools -Scope AllUsers -Repository LocalPackages -Force
+````
+
+or
+
+````powershell
+Install-Package PsNetTools -Source nexusGallery
 ````

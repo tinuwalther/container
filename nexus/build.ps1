@@ -19,4 +19,10 @@ if([string]::IsNullOrEmpty($container)){
 
 docker inspect --format='{{json .NetworkSettings.Networks.custom }}' $containerName | ConvertFrom-Json
 
+<#
+docker exec -it nexus /bin/bash
+cd /nexus-data
+cat admin.password
+
 Invoke-WebRequest -Uri 'http://nexus:8081/repository/PSModules/'
+#>
