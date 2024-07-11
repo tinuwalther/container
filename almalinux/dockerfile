@@ -1,0 +1,15 @@
+FROM almalinux:9
+LABEL os="almalinux"
+LABEL author="tinu"
+LABEL content="almalinux with PowerShell 7"
+RUN echo "*** Build Image ***"
+RUN dnf clean all -y
+RUN dnf update -y
+RUN dnf install sudo -y
+RUN echo "> Install PowerShell 7"
+RUN curl https://packages.microsoft.com/config/rhel/9/prod.repo | tee /etc/yum.repos.d/microsoft.repo
+RUN dnf install --assumeyes powershell
+RUN dnf install --assumeyes git
+RUN echo "> Install PSModules"
+COPY profile.ps1 /opt/microsoft/powershell/7
+RUN echo "*** Build finished ***"
