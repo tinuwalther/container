@@ -26,13 +26,9 @@ The Nexus Repository has a Nuget Repo for [Modules](http://nexus:8081/repository
 
 PsNetTools is published at the PSModules Repository.
 
-[ [Top](#) ] 
-
 # Almalinux container
 
 The almalinux has powershell installed and has the same custom network as Nexus configured.
-
-[ [Top](#) ] 
 
 ## PowerShellGet
 
@@ -174,7 +170,7 @@ Find-Package: No match was found for the specified search criteria and module na
 available registered module repositories.
 ````
 
-[ [Top](#) ] 
+[Top](#)
 
 ## PSResourceGet
 
@@ -186,7 +182,7 @@ Name      Uri                                      Trusted Priority
 PSGallery https://www.powershellgallery.com/api/v2 False   50
 ````
 
-[ [Top](#) ] 
+[Top](#)
 
 ## Offline Installation NuPkg
 
@@ -222,4 +218,4 @@ VERBOSE: Requested HTTP/1.1 GET with 0-byte payload
 VERBOSE: Received HTTP/1.1 21510-byte response of content type application/zip
 VERBOSE: File Name: PsNetTools.nupkg
 
-[ [Top](#) ] 
+[Top](#)
