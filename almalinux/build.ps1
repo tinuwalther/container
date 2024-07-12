@@ -19,7 +19,7 @@ if([string]::IsNullOrEmpty($container)){
     if([String]::IsNullOrEmpty($isrunning)){
         docker start $containerName
     }
-    docker exec -it $containerName pwsh --nologo
+    # docker exec -it $containerName pwsh --nologo
 }
 
 docker inspect --format='{{json .NetworkSettings.Networks.custom }}' $containerName | ConvertFrom-Json

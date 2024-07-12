@@ -11,6 +11,7 @@
         - [Find a Module with credentials](#find-a-module-with-credentials)
     - [PSResourceGet](#psresourceget)
     - [Offline Installation NuPkg](#offline-installation-nupkg)
+    - [Conclusion](#conclusion)
 
 <!-- /TOC -->
 
@@ -32,6 +33,8 @@ The almalinux has powershell installed and has the same custom network as Nexus 
 ## PowerShellGet
 
 ````powershell
+Get-PSRepository
+
 Name                      InstallationPolicy   SourceLocation
 ----                      ------------------   --------------
 PSGallery                 Untrusted            https://www.powershellgallery.com/api/v2
@@ -122,15 +125,15 @@ PackageManagementProvider NuGet
 The Nexus Repository has a Nuget Repo for Modules and one for Scripts configured. Anonymous Access is disabled.
 
 ````powershell
-$PSModulesUri = 'http://nexus:8081/repository/PSModules/'
-$Creds        = Get-Credential
+$RemoteRepoCreds = Get-Credential
+$PSModulesUri    = 'http://nexus:8081/repository/PSModules/'
 $Splatting = @{
     Name                      = 'nexusGallery';
     SourceLocation            = $PSModulesUri;
     PublishLocation           = $PSModulesUri;
     InstallationPolicy        = 'Trusted';
     PackageManagementProvider = 'NuGet';
-    Credential                = $creds;
+    Credential                = $RemoteRepoCreds;
 }
 Register-PSRepository @Splatting -Verbose
 ````
@@ -149,20 +152,29 @@ VERBOSE: Repository details, Name = 'nexusGallery', Location = 'http://nexus:808
 ### Find a Module with credentials
 
 ````powershell
-Find-Module -Name -Repository nexusGallery -Credential $Creds -Verbose
+Find-Module -Name PsNetTools -Repository nexusGallery -Credential $RemoteRepoCreds -Verbose
 ````
 
 Output:
 
 ````powershell
+VERBOSE: Suppressed Verbose Repository details, Name = 'nexusGallery', Location = 'http://nexus:8081/repository/PSModules/'; IsTrusted = 'True'; IsRegistered = 'True'.
+VERBOSE: Repository details, Name = 'nexusGallery', Location = 'http://nexus:8081/repository/PSModules/'; IsTrusted = 'True'; IsRegistered = 'True'.
+VERBOSE: Using the provider 'PowerShellGet' for searching packages.
+VERBOSE: Using the specified source names : 'nexusGallery'.
+VERBOSE: Getting the provider object for the PackageManagement Provider 'NuGet'.
+VERBOSE: The specified Location is 'http://nexus:8081/repository/PSModules/' and PackageManagementProvider is 'NuGet'.
 WARNING: Unable to resolve package source 'http://nexus:8081/repository/PSModules/'.
-Find-Package: No match was found for the specified search criteria and module name 'PsNetTools'. Try Get-PSRepository to see all available registered module repositories.
+VERBOSE: Total package yield:'0' for the specified package 'PsNetTools'.
+Find-Package: No match was found for the specified search criteria and module name 'PsNetTools'. Try Get-PSRepository to see all
+available registered module repositories.
 ````
 
 ## PSResourceGet
 
 ````powershell
 Get-PSResourceRepository
+
 Name      Uri                                      Trusted Priority
 ----      ---                                      ------- --------
 PSGallery https://www.powershellgallery.com/api/v2 False   50
@@ -173,13 +185,13 @@ PSGallery https://www.powershellgallery.com/api/v2 False   50
 Download the Package:
 
 ````powershell
-Invoke-WebRequest -Uri 'http://nexus:8081/repository/PSModules/PsNetTools/0.7.8' -OutFile '/home/nupkg/PsNetTools.nupkg'
+Invoke-WebRequest -Uri 'http://nexus:8081/repository/PSModules/PsNetTools/0.7.8' -OutFile '/tmp/nupkg/PsNetTools.nupkg'
 ````
 
 Register a local path as local Repository:
 
 ````powershell
-Register-PSRepository -Name LocalPackages -SourceLocation /home/nupkg/ -InstallationPolicy Trusted
+Register-PSRepository -Name LocalPackages -SourceLocation /tmp/nupkg/ -InstallationPolicy Trusted
 ````
 
 Install the Module from the local Repository:
@@ -193,3 +205,12 @@ or
 ````powershell
 Install-Package PsNetTools -Source nexusGallery
 ````
+
+## Conclusion
+
+If the anonymous users to access the server is disabled, only the Invoke-WebRequest works:
+
+VERBOSE: Requested HTTP/1.1 GET with 0-byte payload
+VERBOSE: Received HTTP/1.1 21510-byte response of content type application/zip
+VERBOSE: File Name: PsNetTools.nupkg
+
