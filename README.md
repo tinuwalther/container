@@ -25,8 +25,9 @@
 
 # Nexus container
 
-Sonatype Nexus Repository OSS 3.70.1-02
-The Nexus container has a custom network configured.
+Sonatype Nexus Repository OSS 3.70.1-02.
+
+The Nexus container and the almalinux has a custom network configured.
 
 ## Nuget Repository
 
@@ -36,7 +37,25 @@ PsNetTools is published at the PSModules Repository.
 
 # Almalinux container
 
-The almalinux has powershell installed and has the same custom network as Nexus configured.
+The almalinux has powershell installed and has configured the same custom network as the Nexus container.
+
+````
+Name                           Value
+----                           -----
+PSVersion                      7.4.3
+PSEdition                      Core
+GitCommitId                    7.4.3
+OS                             AlmaLinux 9.4 (Seafoam Ocelot)
+Platform                       Unix
+PSCompatibleVersions           {1.0, 2.0, 3.0, 4.0…}
+PSRemotingProtocolVersion      2.3
+SerializationVersion           1.1.0.1
+WSManStackVersion              3.0
+
+ModuleType Version    PreRelease Name                                PSEdition
+---------- -------    ---------- ----                                ---------
+Binary     1.0.5                 Microsoft.PowerShell.PSResourceGet  Core,Desk
+````
 
 ## PowerShellGet
 
@@ -45,7 +64,7 @@ Get-PSRepository
 
 Name                      InstallationPolicy   SourceLocation
 ----                      ------------------   --------------
-PSGallery                 Untrusted            https://www.powershellgallery.com/api/v2
+PSGallery                 Trusted              https://www.powershellgallery.com/api/v2
 ````
 
 ### Register Nexus Repository with PowerShellGet

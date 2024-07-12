@@ -1,0 +1,23 @@
+meta {
+  name: Enable-AnonymousAccess
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8081/service/rest/v1/security/anonymous
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "enabled": true,
+    "userId": "anonymous",
+    "realmName": "NexusAuthorizingRealm"
+  }
+}
