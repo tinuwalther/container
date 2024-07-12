@@ -1,6 +1,19 @@
 # Table of Contents
 
-<!-- TOC -->autoauto- [Table of Contents](#table-of-contents)auto- [Nexus container](#nexus-container)auto    - [Nuget Repository](#nuget-repository)auto- [Almalinux container](#almalinux-container)auto    - [PowerShellGet](#powershellget)auto        - [Register Nexus Repository](#register-nexus-repository)auto        - [Find a Module](#find-a-module)auto        - [PSRepositories.xml](#psrepositoriesxml)auto        - [Register Nexus Repository with credentials](#register-nexus-repository-with-credentials)auto        - [Find a Module with credentials](#find-a-module-with-credentials)auto    - [PSResourceGet](#psresourceget)auto    - [Offline Installation NuPkg](#offline-installation-nupkg)auto    - [Conclusion](#conclusion)auto    - [Issues](#issues)autoauto<!-- /TOC -->
+- [Table of Contents](#table-of-contents)
+- [Nexus container](#nexus-container)
+    - [Nuget Repository](#nuget-repository)
+    - [Almalinux container](#almalinux-container)
+    - [PowerShellGet](#powershellget)
+    - [Register Nexus Repository](#register-nexus-repository)
+    - [Find a Module](#find-a-module)
+    - [PSRepositories.xml](#psrepositoriesxml)
+    - [Register Nexus Repository with credentials](#register-nexus-repository-with-credentials)
+    - [Find a Module with credentials](#find-a-module-with-credentials)
+    - [PSResourceGet](#psresourceget)
+- [Offline Installation NuPkg](#offline-installation-nupkg)
+- [Conclusion](#conclusion)
+- [Issues PSResourceGet](#issues-psresourceget)
 
 # Nexus container
 
