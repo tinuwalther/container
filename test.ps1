@@ -20,7 +20,7 @@ $Splatting = @{
 }
 Register-PSRepository @Splatting -Verbose
 
-Find-Module -Name PsNetTools -Repository nexusGallery -Credential $RemoteRepoCreds -Verbose
+Find-Module -Name PsNetTools -Repository nexusGallery -Credential $RemoteRepoCreds -Debug
 #endregion
 
 #region Invoke-WebRequest
