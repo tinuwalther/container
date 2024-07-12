@@ -2,16 +2,13 @@
 
 #region PowerShellGet
 Get-PSRepository
-
-$File = Get-ChildItem -Path / -Filter PSRepositories.xml -Recurse -ErrorAction SilentlyContinue -Force; $File
-[xml]$xml = Get-Content $File.FullName
-$xml.Objs.Obj.DCT.En.Obj.MS.S
-
+Get-Module -ListAvailable -Name PowerShellGet | Select-Object Version,Name
 
 $RemoteRepoCreds = Get-Credential
 $PSModulesUri    = 'http://nexus:8081/repository/PSModules/'
+$NexusRepository = 'nexusGallery'
 $Splatting = @{
-    Name                      = 'nexusGallery';
+    Name                      = $NexusRepository;
     SourceLocation            = $PSModulesUri;
     PublishLocation           = $PSModulesUri;
     InstallationPolicy        = 'Trusted';
@@ -20,7 +17,42 @@ $Splatting = @{
 }
 Register-PSRepository @Splatting -Verbose
 
+$File = Get-ChildItem -Path / -Filter PSRepositories.xml -Recurse -ErrorAction SilentlyContinue -Force; $File
+[xml]$xml = Get-Content $File.FullName
+$xml.Objs.Obj.DCT.En.Obj.MS.S
+
 Find-Module -Name PsNetTools -Repository nexusGallery -Credential $RemoteRepoCreds -Debug
+#endregion
+
+#region PSResourceGet
+Find-Module -Repository PSGallery -Name Microsoft.PowerShell.PSResourceGet -Verbose
+Install-Module -Repository PSGallery -Name Microsoft.PowerShell.PSResourceGet -Force -Verbose
+
+Get-PSResourceRepository
+Get-Module -ListAvailable -Name Microsoft.PowerShell.PSResourceGet | Select-Object Version,Name
+
+$PSModulesUri    = 'http://nexus:8081/repository/PSModules/'
+$NexusRepository = 'nexusGallery'
+$Splatting = @{
+  Name       = $NexusRepository
+  Uri        = $PSModulesUri 
+  Trusted    = $true
+  PassThru   = $true
+  Priority   = 20 # default is 50
+  APIVersion = 'v2'
+}
+Register-PSResourceRepository @Splatting -Verbose
+
+Get-PSResourceRepository
+
+$File = Get-ChildItem -Path / -Filter PSResourceRepository.xml -Recurse -ErrorAction SilentlyContinue -Force; $File
+
+[xml]$xml = Get-Content $File.FullName
+$xml.configuration.Repository
+
+Find-PSResource -Name PsNetTools -Repository $NexusRepository -Verbose
+
+Install-PSResource -Name PsNetTools -Scope AllUsers -PassThru -Debug
 #endregion
 
 #region Invoke-WebRequest
