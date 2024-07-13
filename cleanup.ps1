@@ -1,18 +1,21 @@
 # Cleanup
 
 $containerName = 'nexus', 'alma'
+$imageName     = 'tinuwalther/alma', 'sonatype/nexus3'
 
 docker ps
 
+#region Stop container
 $runningContainer = docker ps --format "{{.Names}}"
-
 $runningContainer  | ForEach-Object { 
     if($containerName -contains $PSItem){
         Write-Host "Stop container $($PSItem)"
         docker stop $PSItem
     }
 }
+#endregion
 
+#region Remove container
 $ret = Read-Host "Would you remove the containers $($containerName)? [Y] Yes, [N] No"
 if($ret -match '^y'){
     Write-Host "Remove containers $($containerName)"
@@ -21,7 +24,17 @@ if($ret -match '^y'){
     Write-Host "No"
     docker ps -a
 }
+#endregion
 
-docker images
-# Remove images
-# $containerName | ForEach-Object { docker rmi "$($PSItem):latest" }
+#region Remove image
+$runningImage = docker images --format "{{.Repository}}"
+$runningImage  | ForEach-Object { 
+    if($imageName -contains $PSItem){
+        $ret = Read-Host "Would you remove the image $($PSItem)? [Y] Yes, [N] No"
+        if($ret -match '^y'){
+            Write-Host "Remove image $($PSItem)"
+            # docker rmi "$($PSItem):latest"
+        }
+    }
+}
+#endregion

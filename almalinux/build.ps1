@@ -36,6 +36,10 @@ if([string]::IsNullOrEmpty($container)){
 docker inspect --format='{{json .NetworkSettings.Networks.custom }}' $containerName | ConvertFrom-Json
 
 <#
+$PSVersionTable
+
+Get-Module -ListAvailable *PSResourceGet
+
 Invoke-WebRequest -Uri 'http://nexus:8081/'
 
 Invoke-WebRequest -Uri 'http://nexus:8081/repository/PSModules/'

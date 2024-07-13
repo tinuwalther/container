@@ -11,5 +11,7 @@ RUN curl https://packages.microsoft.com/config/rhel/9/prod.repo | tee /etc/yum.r
 RUN dnf install --assumeyes powershell
 RUN dnf install --assumeyes git
 RUN echo "> Install PSModules"
+RUN sudo pwsh -Command "& {Set-PSRepository -Name PSGallery -InstallationPolicy Trusted -SourceLocation https://www.powershellgallery.com/api/v2}"
+RUN sudo pwsh -Command "& {Install-Module -Name Microsoft.PowerShell.PSResourceGet -Scope AllUsers -PassThru -Force -Verbose}"
 COPY profile.ps1 /opt/microsoft/powershell/7
 RUN echo "*** Build finished ***"

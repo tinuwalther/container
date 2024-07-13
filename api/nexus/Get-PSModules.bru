@@ -1,0 +1,11 @@
+meta {
+  name: Get-PSModules
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8081/service/rest/v1/repositories/nuget/hosted/PSModules
+  body: none
+  auth: none
+}
