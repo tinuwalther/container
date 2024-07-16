@@ -1,6 +1,5 @@
 FROM badgerati/pode:latest
-LABEL os="pode"
-LABEL author="tinu"
+LABEL author="tinuwalther"
 RUN echo "*** Build Image ***"
 RUN apt-get clean all
 RUN apt-get update
