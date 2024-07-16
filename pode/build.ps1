@@ -42,7 +42,16 @@ docker inspect --format='{{json .NetworkSettings.Networks.custom }}' $containerN
 <#
 Invoke-WebRequest -Uri 'http://localhost:8080/'
 
-Invoke-WebRequest -Uri 'http://nexus:8081/repository/PSModules/'
+Invoke-WebRequest -Uri http://localhost:8080/api/index -Method Post
 
-Invoke-WebRequest -Uri 'http://nexus:8081/repository/PSModules/' -Credential (Get-Credential) -AllowUnencryptedAuthentication
+Invoke-WebRequest -Uri http://localhost:8080/api/pode -Method Post
+
+Invoke-WebRequest -Uri http://localhost:8080/api/asset -Method Post
+
+$SqlQuery = 'SELECT * FROM "classic_ESXiHosts" Limit 7'
+Invoke-WebRequest -Uri http://localhost:8080/api/sqlite -Method Post -Body $SqlQuery
+
+Invoke-WebRequest -Uri http://localhost:8080/api/pester -Method Post
+
+Invoke-WebRequest -Uri http://localhost:8080/api/mermaid -Method Post
 #>
