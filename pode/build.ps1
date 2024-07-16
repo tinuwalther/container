@@ -1,7 +1,9 @@
 # Build container from docker file
 Push-Location -Path $PSScriptRoot
 
-# git clone https://github.com/tinuwalther/PodePSHTML.git ./PodePSHTML
+if(-not(Test-Path "$($PSScriptRoot)/PodePSHTML")){
+    git clone https://github.com/tinuwalther/PodePSHTML.git ./PodePSHTML
+}
 
 $hostName      = 'PodePSHTML'
 $containerName = 'PodePSHTML'
@@ -25,7 +27,6 @@ if([string]::IsNullOrEmpty($image)){
 
 if([string]::IsNullOrEmpty($container)){
     Write-Host "Run and start container $($containerName)"
-    # docker run -e TZ="Europe/Zurich" --hostname $hostName --name $containerName --network $networkName -it $imageName
     docker run -e TZ="Europe/Zurich" --hostname $hostName --name $containerName --network $networkName -p 8080:8080 -d $imageName
 }else{
     $isrunning = docker ps --filter "name=$containerName" --format "{{.Names}}"
