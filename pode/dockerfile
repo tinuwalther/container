@@ -18,6 +18,8 @@ RUN dnf update -y
 FROM install-base AS install-powershell
 RUN curl https://packages.microsoft.com/config/rhel/9/prod.repo | tee /etc/yum.repos.d/microsoft.repo
 RUN dnf install --assumeyes powershell
+RUN rm -rf /etc/yum.repos.d/microsoft.repo
+RUN dnf clean all -y
 COPY profile.ps1 /opt/microsoft/powershell/7
 RUN dnf up --security
 
@@ -29,7 +31,7 @@ RUN pwsh -Command "& {Install-Module -Name mySQLite -Scope AllUsers -Force}"
 RUN pwsh -Command "& {Install-Module -Name Pester -Scope AllUsers -SkipPublisherCheck -Force}"
 
 FROM install-psmodules AS install-podepshtml
-RUN mkdir /PodePSHTML
-COPY ./PodePSHTML /PodePSHTML
+RUN mkdir /usr/src/PodePSHTML
+COPY ./PodePSHTML /usr/src/PodePSHTML
 EXPOSE 8080
-CMD [ "pwsh", "-c", "/PodePSHTML/PodeServer.ps1" ]
+CMD [ "pwsh", "-c", "/usr/src/PodePSHTML/PodeServer.ps1" ]
