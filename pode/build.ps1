@@ -2,9 +2,9 @@
 Push-Location -Path $PSScriptRoot
 
 if(-not(Test-Path "$($PSScriptRoot)/PodePSHTML")){
-    git clone https://github.com/tinuwalther/PodePSHTML.git ./PodePSHTML
-    Remove-Item ./PodePSHTML/.git -Recurse -Force
-    Remove-Item ./PodePSHTML/public/img -Recurse -Force
+    git clone https://github.com/tinuwalther/PodePSHTML.git ./podepshtml
+    Remove-Item ./podepshtml/.git -Recurse -Force
+    Remove-Item ./podepshtml/public/img -Recurse -Force
 }
 
 $hostName      = 'podepshtml'
