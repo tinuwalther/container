@@ -27,7 +27,7 @@ function prompt{
     $history = Get-History -ErrorAction Ignore
     $Version = "$($PSVersionTable.PSVersion.ToString())"
     $OsString = cat /etc/os-release | grep "PRETTY_NAME"
-    $OsVerison = [regex]::Match($OsString, '\w+\s\d+\.\d+').value
+    $OsVerison = [regex]::Match($OsString, '\w+\s\w+\s\w+\d+\.\d+').value
     Write-Host "[" -NoNewline
     Write-Host "$($history.count[-1])" -NoNewline -foregroundcolor $color
     Write-Host "][" -NoNewline
