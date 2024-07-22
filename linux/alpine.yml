@@ -1,0 +1,14 @@
+# **************************************************************************************************************************
+# Buidl images:  docker-compose build --build-arg now="$(date +%Y-%m-%d)" --build-arg version="1.0.0"
+# Run container: docker run -e TZ="Europe/Zurich" --hostname $hostName --name $containerName --network custom -it $imageName
+# **************************************************************************************************************************
+
+services:
+  alpine:
+    build:
+      context: .
+      dockerfile: ./alpine.dockerfile
+    container_name: tinuwalther/alpine
+    hostname: alpine
+    env_file:
+    - path: ./default.env

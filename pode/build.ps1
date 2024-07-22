@@ -7,7 +7,7 @@ if(-not(Test-Path "$($PSScriptRoot)/PodePSHTML")){
     Remove-Item ./podepshtml/public/img -Recurse -Force
 }
 
-$hostName      = 'podepshtml'
+$hostName      = 'pshtml'
 $containerName = 'podepshtml'
 $imageName     = 'tinuwalther/pode'
 $networkName   = 'custom'
@@ -26,7 +26,7 @@ docker network inspect $networkName --format='{{json .IPAM.Config }}' | ConvertF
 
 if([string]::IsNullOrEmpty($image)){
     Write-Host "Build image $($imageName)"
-    docker build --build-arg now=$buildDate --build-arg version=$buildVersion -f ./dockerfile -t $imageName .
+    docker build --build-arg now=$buildDate --build-arg version=$buildVersion -f ./pode.dockerfile -t $imageName .
 }
 
 if([string]::IsNullOrEmpty($container)){

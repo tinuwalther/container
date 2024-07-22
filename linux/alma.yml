@@ -1,0 +1,14 @@
+# **************************************************************************************************************************
+# Buidl images:  docker-compose build --build-arg now="$(date +%Y-%m-%d)" --build-arg version="1.0.0"
+# Run container: docker run -e TZ="Europe/Zurich" --hostname $hostName --name $containerName --network custom -it $imageName
+# **************************************************************************************************************************
+
+services:
+  alma:
+    build:
+      context: .
+      dockerfile: ./alma.dockerfile
+    container_name: alma
+    hostname: alma
+    env_file:
+    - path: ./default.env

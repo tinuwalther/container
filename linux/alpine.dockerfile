@@ -7,9 +7,10 @@ LABEL os="alpine"
 LABEL author="@tinuwalther"
 LABEL build-date=$now
 LABEL name="alpine"
-LABEL description="alpinelinux with PowerShell 7"
+LABEL description="almalinux with PowerShell 7 and git"
 LABEL summary="alpinelinux with PowerShell 7"
 LABEL version=$version
+RUN apk update && apk upgrade
 RUN apk add --no-cache \
     ca-certificates \
     less \
@@ -22,8 +23,9 @@ RUN apk add --no-cache \
     userspace-rcu \
     zlib \
     icu-libs \
-    curl\
-    git
+    curl \
+    git \
+    sqlite
 
 RUN apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
     lttng-ust
@@ -37,7 +39,7 @@ RUN tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
 RUN chmod +x /opt/microsoft/powershell/7/pwsh
 RUN ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 RUN rm -rf /tmp/powershell.tar.gz
-COPY profile.ps1 /opt/microsoft/powershell/7
+COPY alpine/profile.ps1 /opt/microsoft/powershell/7
 CMD [ "pwsh" ]
 
 # FROM install-powershell AS install-psmodules
