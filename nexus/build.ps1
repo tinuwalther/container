@@ -17,11 +17,11 @@ if([string]::IsNullOrEmpty($network)){
 }
 docker network inspect $networkName --format='{{json .IPAM.Config }}' | ConvertFrom-Json | Format-List
 
-if([string]::IsNullOrEmpty($volume)){
-    Write-Host "Create volume $($volume)"
-    docker volume create $containerData
-}
-docker volume inspect $containerData --format='{{json .Mountpoint }}' | ConvertFrom-Json | Format-List
+# if([string]::IsNullOrEmpty($volume)){
+#     Write-Host "Create volume $($volume)"
+#     docker volume create $containerData
+# }
+# docker volume inspect $containerData --format='{{json .Mountpoint }}' | ConvertFrom-Json | Format-List
 
 if([string]::IsNullOrEmpty($image)){
     Write-Host "Download image $($imageName)"
@@ -30,6 +30,7 @@ if([string]::IsNullOrEmpty($image)){
 
 if([string]::IsNullOrEmpty($container)){
     Write-Host "Run and start container $($containerName)"
+    # docker run -e TZ="Europe/Zurich"  -d -p 8081:8081 --name $containerName --network $networkName -v /volumes/PSRepository/nexus/:/nexus-data -it $imageName
     docker run -e TZ="Europe/Zurich"  -d -p 8081:8081 --name $containerName --network $networkName -it $imageName
 }else{
     Write-Host "Start container $($containerName)"
