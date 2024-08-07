@@ -48,6 +48,9 @@ if([string]::IsNullOrEmpty($container)){
 docker inspect --format='{{json .NetworkSettings.Networks.custom }}' $containerName | ConvertFrom-Json
 
 <#
+Push the Image to https://hub.docker.com/repository/docker/tinuwalther/pode/
+docker push tinuwalther/pode
+
 Build image tinuwalther/pode
 [+] Building 68.8s (29/29) FINISHED
 [+] Building 56.1s (24/24) FINISHED
