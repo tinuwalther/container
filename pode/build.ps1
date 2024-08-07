@@ -12,7 +12,7 @@ $containerName = 'podepshtml'
 $imageName     = 'tinuwalther/pode'
 $networkName   = 'custom'
 $buildDate     = Get-Date -f 'yyyy-MM-dd HH:mm:ss'
-$buildVersion  = '1.0.1'
+$buildVersion  = '1.1.0'
 
 $network   = docker network ls --filter "name=$networkName" --format "{{.Name}}"
 $image     = docker images $imageName --format "{{.Repository}}"
